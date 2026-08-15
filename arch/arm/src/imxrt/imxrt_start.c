@@ -87,6 +87,10 @@
 void __start(void) noinstrument_function;
 #endif
 
+#ifdef CONFIG_ARCH_FAMILY_IMXRT118x
+void __start_c(void) noinstrument_function;
+#endif
+
 extern const void * const _vectors[];
 
 /****************************************************************************
@@ -147,8 +151,20 @@ static inline void imxrt_tcmenable(void)
  *
  ****************************************************************************/
 
+#ifdef CONFIG_ARCH_FAMILY_IMXRT118x
+void __attribute__((naked)) noinstrument_function __start(void)
+{
+  __asm__ volatile ("mov r0, #0\n\t"
+                    "msr msplim, r0\n\t"
+                    "msr psplim, r0\n\t"
+                    "b __start_c\n\t");
+}
+
+void __start_c(void)
+#else
 osentry_function
 void __start(void)
+#endif
 {
   const register uint32_t *src;
   register uint32_t *dest;

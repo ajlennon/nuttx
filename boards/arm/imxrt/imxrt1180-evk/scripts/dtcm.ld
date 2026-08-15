@@ -6,7 +6,8 @@
 
 MEMORY
 {
-  dtcm (rwx) : ORIGIN = 0x30000000, LENGTH = 128K
+  itcm (rwx) : ORIGIN = 0x0ffe0000, LENGTH = 128K
+  ocram (rwx) : ORIGIN = 0x20480000, LENGTH = 512K
 }
 
 OUTPUT_ARCH(arm)
@@ -30,22 +31,22 @@ SECTIONS
     *(.got)
     *(.gcc_except_table)
     _etext = ABSOLUTE(.);
-  } > dtcm
+  } > itcm
 
   .init_section :
   {
     _sinit = ABSOLUTE(.);
     KEEP(*(.init_array .init_array.*))
     _einit = ABSOLUTE(.);
-  } > dtcm
+  } > itcm
 
-  .ARM.extab : { *(.ARM.extab*) } > dtcm
+  .ARM.extab : { *(.ARM.extab*) } > itcm
   .ARM.exidx :
   {
     __exidx_start = ABSOLUTE(.);
     *(.ARM.exidx*)
     __exidx_end = ABSOLUTE(.);
-  } > dtcm
+  } > itcm
 
   _eronly = ABSOLUTE(.);
 
@@ -57,14 +58,14 @@ SECTIONS
     CONSTRUCTORS
     . = ALIGN(4);
     _edata = ABSOLUTE(.);
-  } > dtcm
+  } > ocram AT > itcm
 
   .ramfunc ALIGN(4) :
   {
     _sramfuncs = ABSOLUTE(.);
     *(.ramfunc .ramfunc.*)
     _eramfuncs = ABSOLUTE(.);
-  } > dtcm
+  } > ocram AT > itcm
   _framfuncs = LOADADDR(.ramfunc);
 
   .bss :
@@ -75,7 +76,7 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     _ebss = ABSOLUTE(.);
-  } > dtcm
+  } > ocram
 
   /DISCARD/ : { *(.note .note.*) }
 
