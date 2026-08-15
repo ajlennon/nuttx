@@ -26,9 +26,9 @@
 
 #include <nuttx/config.h>
 
-/* Clock programming is currently provided by the minimal RT1180 chip-level
- * debugger-load setup.  This file is the board hook for the future complete
- * PLL/root configuration.
+/* Clock root and gate programming is provided by the RT1180 chip-level
+ * setup.  Full PLL/PMU setup will be added there after ELE/TRDC ownership is
+ * available.
  */
 
 /****************************************************************************

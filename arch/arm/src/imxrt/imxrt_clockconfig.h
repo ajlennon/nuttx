@@ -29,12 +29,16 @@
 
 #include <nuttx/config.h>
 
+#include <stdint.h>
+
 /* IMXRT117X Clock pheripheral is different from IMXRT10XX
  * hence we use a VER2 driver for clockconfig
  */
 
 #ifdef CONFIG_ARCH_FAMILY_IMXRT118x
 void imxrt_clockconfig(void);
+void imxrt_clockall_lpuart1(void);
+uint32_t imxrt_get_lpuart_clock(uint32_t base);
 #elif defined(CONFIG_IMXRT_CLOCKCONFIG_VER2)
 #include "imxrt_clockconfig_ver2.h"
 #else

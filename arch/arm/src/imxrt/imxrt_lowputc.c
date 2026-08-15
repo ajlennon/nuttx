@@ -183,9 +183,10 @@ static const struct uart_config_s g_console_config =
 void imxrt_lpuart_clock_enable (uint32_t base)
 {
 #ifdef CONFIG_ARCH_FAMILY_IMXRT118x
-  /* The minimal RT1180 clock setup leaves the LPUART1 root enabled. */
-
-  (void)base;
+  if (base == IMXRT_LPUART1_BASE)
+    {
+      imxrt_clockall_lpuart1();
+    }
 #else
   if (base == IMXRT_LPUART1_BASE)
     {
@@ -509,7 +510,11 @@ int imxrt_lpuart_configure(uint32_t base,
   uint32_t regval2;
 
 #ifdef CONFIG_ARCH_FAMILY_IMXRT118x
-  lpuart_freq = BOARD_LPUART_FREQUENCY;
+  lpuart_freq = imxrt_get_lpuart_clock(base);
+  if (lpuart_freq == 0)
+    {
+      return ERROR;
+    }
 #elif defined(CONFIG_ARCH_FAMILY_IMXRT117x)
   if (base == IMXRT_LPUART1_BASE)
     {
