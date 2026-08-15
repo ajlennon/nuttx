@@ -38,6 +38,7 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
+#define IMXRT118X_ROOT_M33               1u
 #define IMXRT118X_ROOT_LPUART0102       27u
 #define IMXRT118X_LPCG_LPUART1          79u
 
@@ -84,9 +85,11 @@ void imxrt_clockconfig(void)
   /* Keep the proven RC source until the port owns the complete NXP
    * sequence: PMU PLL LDO, SYS_PLL3, and ELE/TRDC access.  Root and LPCG
    * programming are now separate so a later PLL switch cannot silently
-   * desynchronise the UART baud calculation.
+   * desynchronise the core timer or UART baud calculations.
    */
 
+  imxrt118x_set_root(IMXRT118X_ROOT_M33,
+                     IMXRT118X_ROOT_MUX_OSCRC24M, 1);
   imxrt118x_set_root(IMXRT118X_ROOT_LPUART0102,
                      IMXRT118X_ROOT_MUX_OSCRC24M, 1);
   imxrt_clockall_lpuart1();

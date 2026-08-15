@@ -752,19 +752,28 @@ int imxrt_lpuart_configure(uint32_t base,
       regval |= LPUART_CTRL_PE | LPUART_CTRL_PT_EVEN;
     }
 
-  if (config->bits == 9 || (config->bits == 8 && config->parity != 0))
+  if (config->bits == 7)
+    {
+      /* Seven data bits with parity use the normal eight-bit frame.
+       * Without parity, select the dedicated seven-bit mode.
+       */
+
+      if (config->parity == 0)
+        {
+          regval |= LPUART_CTRL_M7;
+        }
+    }
+  else if (config->bits == 9 ||
+           (config->bits == 8 && config->parity != 0))
     {
       regval |= LPUART_CTRL_M;
     }
-  else if ((config->bits == 8))
+  else if (config->bits == 8)
     {
       regval &= ~LPUART_CTRL_M;
     }
   else
     {
-      /* Here should be added support of other bit modes. */
-
-#warning missing logic
       return ERROR;
     }
 

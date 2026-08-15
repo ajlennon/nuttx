@@ -45,11 +45,9 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-#warning REVISIT these clock settings
-
-/* Select MCU-specific settings
- *
- * The SysTick timer is driven by the output of the Main Clock (main_clk).
+/* NVIC_SYSTICK_CTRL_CLKSOURCE selects the processor clock.  The board CPU
+ * frequency must therefore match the core root configured by
+ * imxrt_clockconfig().
  */
 
 #define IMXRT_SYSTICK_CLOCK  BOARD_CPU_FREQUENCY
