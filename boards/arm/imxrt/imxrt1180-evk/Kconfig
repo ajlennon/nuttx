@@ -8,4 +8,14 @@ config IMXRT1180_EVK_DTCM
 	bool
 	default y
 
+config IMXRT1180_EVK_ROM_RAMLOAD
+	bool "Create a FlexSPI NOR ROM RAM-load image"
+	depends on BOOT_RUNFROMISRAM
+	---help---
+		Build an RT1180 container image for the Boot ROM to copy from
+		FlexSPI NOR into CM33 ITCM.  Writable data remains in OCRAM.
+
+		This option only creates the bootable image layout.  Programming
+		the external flash still requires a suitable flash tool.
+
 endif
