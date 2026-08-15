@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/imxrt/hardware/imxrt_pinmux.h
+ * boards/arm/imxrt/imxrt1180-evk/src/imxrt_clockconfig.c
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -20,27 +20,17 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
-#define __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
-
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
 
-#if defined(CONFIG_ARCH_FAMILY_IMXRT102x)
-#  include "hardware/rt102x/imxrt102x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT105x)
-#  include "hardware/rt105x/imxrt105x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT106x)
-#  include "hardware/rt106x/imxrt106x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT117x)
-#  include "hardware/rt117x/imxrt117x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT118x)
-#  include "hardware/rt118x/imxrt118x_pinmux.h"
-#else
-#  error Unrecognized i.MX RT architecture
-#endif
+/* Clock programming is currently provided by the minimal RT1180 chip-level
+ * debugger-load setup.  This file is the board hook for the future complete
+ * PLL/root configuration.
+ */
 
-#endif /* __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H */
+/****************************************************************************
+ * Public Functions
+ ****************************************************************************/

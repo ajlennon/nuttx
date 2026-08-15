@@ -100,6 +100,7 @@ extern const void * const _vectors[];
 
 static inline void imxrt_tcmenable(void)
 {
+#ifdef CONFIG_ARCH_ARMV7M
   uint32_t regval;
 
   UP_MB();
@@ -130,6 +131,7 @@ static inline void imxrt_tcmenable(void)
   /* Copy TCM code from flash to ITCM */
 
 #warning Missing logic
+#endif
 #endif
 }
 

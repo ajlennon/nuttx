@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/imxrt/hardware/imxrt_pinmux.h
+ * arch/arm/src/imxrt/hardware/rt118x/imxrt118x_pinmux.h
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -20,27 +20,29 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
-#define __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
+#ifndef __ARCH_ARM_SRC_IMXRT_HARDWARE_RT118X_IMXRT118X_PINMUX_H
+#define __ARCH_ARM_SRC_IMXRT_HARDWARE_RT118X_IMXRT118X_PINMUX_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
-#include <nuttx/config.h>
+#include "imxrt_gpio.h"
 
-#if defined(CONFIG_ARCH_FAMILY_IMXRT102x)
-#  include "hardware/rt102x/imxrt102x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT105x)
-#  include "hardware/rt105x/imxrt105x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT106x)
-#  include "hardware/rt106x/imxrt106x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT117x)
-#  include "hardware/rt117x/imxrt117x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT118x)
-#  include "hardware/rt118x/imxrt118x_pinmux.h"
-#else
-#  error Unrecognized i.MX RT architecture
-#endif
+/****************************************************************************
+ * Pre-processor Definitions
+ ****************************************************************************/
 
-#endif /* __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H */
+/* The low 16 bits carry a small RT1180-specific pin identifier consumed by
+ * imxrt118x_gpio.c.  Both EVK console pins use mux mode ALT0.
+ */
+
+#define IMXRT_PADMUX_GPIO_AON_08_INDEX  8
+#define IMXRT_PADMUX_GPIO_AON_09_INDEX  9
+
+#define GPIO_LPUART1_TX (GPIO_PERIPH | GPIO_ALT0 | \
+                         IMXRT_PADMUX_GPIO_AON_08_INDEX)
+#define GPIO_LPUART1_RX (GPIO_PERIPH | GPIO_ALT0 | \
+                         IMXRT_PADMUX_GPIO_AON_09_INDEX)
+
+#endif /* __ARCH_ARM_SRC_IMXRT_HARDWARE_RT118X_IMXRT118X_PINMUX_H */

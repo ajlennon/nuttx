@@ -1,0 +1,11 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+if ARCH_BOARD_IMXRT1180_EVK
+
+config IMXRT1180_EVK_DTCM
+	bool
+	default y
+
+endif

@@ -24,34 +24,47 @@
 
 # Required i.MX RT files
 
-set(SRCS imxrt_allocateheap.c imxrt_start.c imxrt_periphclks.c)
+set(SRCS imxrt_allocateheap.c imxrt_start.c)
+
+if(NOT CONFIG_ARCH_FAMILY_IMXRT118x)
+  list(APPEND SRCS imxrt_periphclks.c)
+endif()
 
 if(CONFIG_IMXRT_PROGMEM)
   list(APPEND SRCS imxrt_flash.c)
 endif()
 
+list(APPEND SRCS imxrt_irq.c imxrt_clrpend.c)
+
+if(CONFIG_ARCH_FAMILY_IMXRT118x)
+  list(APPEND SRCS imxrt118x_gpio.c)
+else()
+  list(APPEND SRCS imxrt_gpio.c imxrt_daisy.c)
+endif()
+
 list(
   APPEND
   SRCS
-  imxrt_irq.c
-  imxrt_clrpend.c
-  imxrt_gpio.c
-  imxrt_daisy.c
-  imxrt_wdog.c
   imxrt_serial.c
-  imxrt_xbar.c
-  imxrt_ocotp.c
   imxrt_lowputc.c)
+
+if(NOT CONFIG_ARCH_FAMILY_IMXRT118x)
+  list(APPEND SRCS imxrt_wdog.c imxrt_xbar.c imxrt_ocotp.c)
+endif()
 
 # Configuration-dependent i.MX RT files
 
-if(CONFIG_IMXRT_CLOCKCONFIG_VER2)
+if(CONFIG_ARCH_FAMILY_IMXRT118x)
+  list(APPEND SRCS imxrt118x_clockconfig.c)
+elseif(CONFIG_IMXRT_CLOCKCONFIG_VER2)
   list(APPEND SRCS imxrt_clockconfig_ver2.c imxrt_pmu.c)
 else()
   list(APPEND SRCS imxrt_clockconfig_ver1.c)
 endif()
 
-if(CONFIG_IMXRT_IOMUX_VER2)
+if(CONFIG_ARCH_FAMILY_IMXRT118x)
+  # RT1180 pinmux is handled by the minimal family GPIO implementation.
+elseif(CONFIG_IMXRT_IOMUX_VER2)
   list(APPEND SRCS imxrt_iomuxc_ver2.c)
 else()
   list(APPEND SRCS imxrt_iomuxc_ver1.c)

@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/imxrt/hardware/imxrt_pinmux.h
+ * arch/arm/include/imxrt/imxrt118x_irq.h
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -20,27 +20,27 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
-#define __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H
+#ifndef __ARCH_ARM_INCLUDE_IMXRT_IMXRT118X_IRQ_H
+#define __ARCH_ARM_INCLUDE_IMXRT_IMXRT118X_IRQ_H
 
 /****************************************************************************
- * Included Files
+ * Pre-processor Definitions
  ****************************************************************************/
 
-#include <nuttx/config.h>
+/* MIMXRT1189 Cortex-M33 external interrupt numbering follows the NXP CMSIS
+ * device header.  Add 16 to each CMSIS IRQn to obtain a NuttX vector number.
+ */
 
-#if defined(CONFIG_ARCH_FAMILY_IMXRT102x)
-#  include "hardware/rt102x/imxrt102x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT105x)
-#  include "hardware/rt105x/imxrt105x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT106x)
-#  include "hardware/rt106x/imxrt106x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT117x)
-#  include "hardware/rt117x/imxrt117x_pinmux.h"
-#elif defined(CONFIG_ARCH_FAMILY_IMXRT118x)
-#  include "hardware/rt118x/imxrt118x_pinmux.h"
-#else
-#  error Unrecognized i.MX RT architecture
-#endif
+#define IMXRT_IRQ_TMR1          (IMXRT_IRQ_EXTINT + 0)
+#define IMXRT_IRQ_GPIO1_0       (IMXRT_IRQ_EXTINT + 10)
+#define IMXRT_IRQ_GPIO1_1       (IMXRT_IRQ_EXTINT + 11)
+#define IMXRT_IRQ_LPIT1         (IMXRT_IRQ_EXTINT + 15)
+#define IMXRT_IRQ_LPUART1       (IMXRT_IRQ_EXTINT + 19)
+#define IMXRT_IRQ_LPUART2       (IMXRT_IRQ_EXTINT + 20)
+#define IMXRT_IRQ_GPT1          (IMXRT_IRQ_EXTINT + 209)
+#define IMXRT_IRQ_GPT2          (IMXRT_IRQ_EXTINT + 210)
 
-#endif /* __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_PINMUX_H */
+#define IMXRT_IRQ_NEXTINT       (IMXRT_IRQ_EXTINT + 239)
+#define NR_IRQS                 IMXRT_IRQ_NEXTINT
+
+#endif /* __ARCH_ARM_INCLUDE_IMXRT_IMXRT118X_IRQ_H */
