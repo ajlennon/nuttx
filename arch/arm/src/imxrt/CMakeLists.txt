@@ -42,11 +42,7 @@ else()
   list(APPEND SRCS imxrt_gpio.c imxrt_daisy.c)
 endif()
 
-list(
-  APPEND
-  SRCS
-  imxrt_serial.c
-  imxrt_lowputc.c)
+list(APPEND SRCS imxrt_serial.c imxrt_lowputc.c)
 
 if(NOT CONFIG_ARCH_FAMILY_IMXRT118x)
   list(APPEND SRCS imxrt_wdog.c imxrt_xbar.c imxrt_ocotp.c)
